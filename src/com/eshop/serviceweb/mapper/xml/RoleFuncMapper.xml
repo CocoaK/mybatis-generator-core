@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.serviceweb.mapper.RoleFuncMapper">
+  <resultMap id="BaseResultMap" type="com.eshop.serviceweb.model.RoleFunc">
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <id column="func_code" jdbcType="VARCHAR" property="funcCode" />
+    <result column="is_allow_ind" jdbcType="BIT" property="isAllowInd" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_date" jdbcType="DATE" property="createdDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="last_updated_date" jdbcType="DATE" property="lastUpdatedDate" />
+    <result column="row_id" jdbcType="VARCHAR" property="rowId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_id, func_code, is_allow_ind, created_by, created_date, last_updated_by, last_updated_date, 
+    row_id
+  </sql>
+  <select id="getOne" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role_func
+    where role_id = #{roleId,jdbcType=INTEGER}
+      and func_code = #{funcCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="map">
+    delete from role_func
+    where role_id = #{roleId,jdbcType=INTEGER}
+      and func_code = #{funcCode,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByLock" parameterType="com.eshop.serviceweb.vo.DeleteVO">
+    delete from role_func
+    where role_id = #{id,jdbcType=INTEGER}
+    and last_updated_date = #{lastUpdatedDate,jdbcType=DATE}
+    and last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+      and func_code = #{id,jdbcType=INTEGER}
+    and last_updated_date = #{lastUpdatedDate,jdbcType=DATE}
+    and last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.serviceweb.model.RoleFunc">
+    insert into role_func (role_id, func_code, is_allow_ind, 
+      created_by, created_date, last_updated_by, 
+      last_updated_date, row_id)
+    values (#{roleId,jdbcType=INTEGER}, #{funcCode,jdbcType=VARCHAR}, #{isAllowInd,jdbcType=BIT}, 
+      #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=DATE}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{lastUpdatedDate,jdbcType=DATE}, #{rowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertActive" parameterType="com.eshop.serviceweb.model.RoleFunc">
+    insert into role_func
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="funcCode != null">
+        func_code,
+      </if>
+      <if test="isAllowInd != null">
+        is_allow_ind,
+      </if>
+      <if test="currentUser != null">
+        created_by,
+      </if>
+      <if test="createdDate == null">
+        created_date,
+      </if>
+      <if test="lastUpdatedBy == null">
+        last_updated_by,
+      </if>
+      <if test="lastUpdatedDate == null">
+        last_updated_date,
+      </if>
+      <if test="rowId != null">
+        row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="funcCode != null">
+        #{funcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isAllowInd != null">
+        #{isAllowInd,jdbcType=BIT},
+      </if>
+      <if test="currentUser != null">
+        #{currentUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate == null">
+        now(),
+      </if>
+      <if test="lastUpdatedBy == null">
+        #{currentUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate == null">
+        now(),
+      </if>
+      <if test="rowId != null">
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.eshop.serviceweb.model.RoleFunc">
+    update role_func
+    <set>
+      <if test="isAllowInd != null">
+        is_allow_ind = #{isAllowInd,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=DATE},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date = #{lastUpdatedDate,jdbcType=DATE},
+      </if>
+      <if test="rowId != null">
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+      and func_code = #{funcCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateActiveByLock" parameterType="com.eshop.serviceweb.model.RoleFunc">
+    update role_func
+    <set>
+      <if test="isAllowInd != null">
+        is_allow_ind = #{isAllowInd,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=DATE},
+      </if>
+      <if test="currentUser != null">
+        last_updated_by = #{currentUser,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date = now(),
+      </if>
+      <if test="rowId != null">
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+    and last_updated_date = #{lastUpdatedDate,jdbcType=DATE}
+    and last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+      and func_code = #{funcCode,jdbcType=VARCHAR}
+    and last_updated_date = #{lastUpdatedDate,jdbcType=DATE}
+    and last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="com.eshop.serviceweb.model.RoleFunc">
+    update role_func
+    set is_allow_ind = #{isAllowInd,jdbcType=BIT},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=DATE},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      last_updated_date = #{lastUpdatedDate,jdbcType=DATE},
+      row_id = #{rowId,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=INTEGER}
+      and func_code = #{funcCode,jdbcType=VARCHAR}
+  </update>
+  <sql id="Base_Query_Cause">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="roleId != null">
+         and role_id = #{roleId,jdbcType=INTEGER}
+      </if>
+      <if test="funcCode != null">
+         and func_code = #{funcCode,jdbcType=VARCHAR}
+      </if>
+      <if test="isAllowInd != null">
+         and is_allow_ind = #{isAllowInd,jdbcType=BIT}
+      </if>
+      <if test="createdBy != null">
+         and created_by = #{createdBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createdDate != null">
+         and created_date = #{createdDate,jdbcType=DATE}
+      </if>
+      <if test="lastUpdatedBy != null">
+         and last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+      </if>
+      <if test="lastUpdatedDate != null">
+         and last_updated_date = #{lastUpdatedDate,jdbcType=DATE}
+      </if>
+      <if test="rowId != null">
+         and row_id = #{rowId,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap">
+    select * from role_func
+  </select>
+  <select id="getList" parameterType="com.eshop.serviceweb.model.RoleFunc" resultMap="BaseResultMap">
+    select * from role_func
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="getPageList" parameterType="com.eshop.serviceweb.model.RoleFunc" resultMap="BaseResultMap">
+    select * from role_func
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="queryPageList" parameterType="com.eshop.serviceweb.model.RoleFunc" resultMap="BaseResultMap" useCache="false">
+    select * from role_func
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="queryList" parameterType="com.eshop.serviceweb.model.RoleFunc" resultMap="BaseResultMap" useCache="false">
+    select * from role_func
+    <include refid="Base_Query_Cause" />
+  </select>
+  <cache type="com.eshop.serviceweb.redis.MybatisRedisCache" />
+</mapper>

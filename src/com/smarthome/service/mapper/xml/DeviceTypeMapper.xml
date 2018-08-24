@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smarthome.service.mapper.DeviceTypeMapper">
+  <resultMap id="BaseResultMap" type="com.smarthome.service.model.DeviceType">
+    <id column="device_type" jdbcType="CHAR" property="deviceType" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_desc" jdbcType="VARCHAR" property="deviceDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    device_type, device_name, device_desc
+  </sql>
+  <select id="getOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_type
+    where device_type = #{deviceType,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String">
+    delete from t_device_type
+    where device_type = #{deviceType,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.smarthome.service.model.DeviceType">
+    insert into t_device_type (device_type, device_name, device_desc
+      )
+    values (#{deviceType,jdbcType=CHAR}, #{deviceName,jdbcType=VARCHAR}, #{deviceDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertActive" parameterType="com.smarthome.service.model.DeviceType">
+    insert into t_device_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceType != null">
+        device_type,
+      </if>
+      <if test="deviceName != null">
+        device_name,
+      </if>
+      <if test="deviceDesc != null">
+        device_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=CHAR},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceDesc != null">
+        #{deviceDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.smarthome.service.model.DeviceType">
+    update t_device_type
+    <set>
+      <if test="deviceName != null">
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceDesc != null">
+        device_desc = #{deviceDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where device_type = #{deviceType,jdbcType=CHAR}
+  </update>
+  <update id="update" parameterType="com.smarthome.service.model.DeviceType">
+    update t_device_type
+    set device_name = #{deviceName,jdbcType=VARCHAR},
+      device_desc = #{deviceDesc,jdbcType=VARCHAR}
+    where device_type = #{deviceType,jdbcType=CHAR}
+  </update>
+  <sql id="Base_Query_Cause">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="deviceType != null">
+         and device_type = #{deviceType,jdbcType=CHAR}
+      </if>
+      <if test="deviceName != null">
+         and device_name = #{deviceName,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceDesc != null">
+         and device_desc = #{deviceDesc,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap">
+    select * from t_device_type
+  </select>
+  <select id="getList" parameterType="com.smarthome.service.model.DeviceType" resultMap="BaseResultMap">
+    select * from t_device_type
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="getPageList" parameterType="com.smarthome.service.model.DeviceType" resultMap="BaseResultMap">
+    select * from t_device_type
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="queryPageList" parameterType="com.smarthome.service.model.DeviceType" resultMap="BaseResultMap" useCache="false">
+    select * from t_device_type
+    <include refid="Base_Query_Cause" />
+  </select>
+  <cache type="com.smarthome.service.redis.MybatisRedisCache" />
+</mapper>

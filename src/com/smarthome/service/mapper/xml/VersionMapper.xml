@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smarthome.service.mapper.VersionMapper">
+  <resultMap id="BaseResultMap" type="com.smarthome.service.model.Version">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="cur_version" jdbcType="VARCHAR" property="curVersion" />
+    <result column="latest_version" jdbcType="VARCHAR" property="latestVersion" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, status, cur_version, latest_version, begin_time, end_time, download_url, 
+    description
+  </sql>
+  <select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_version
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from t_version
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.smarthome.service.model.Version">
+    insert into t_version (id, type, status, 
+      cur_version, latest_version, begin_time, 
+      end_time, download_url, description
+      )
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{curVersion,jdbcType=VARCHAR}, #{latestVersion,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{downloadUrl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertActive" parameterType="com.smarthome.service.model.Version">
+    insert into t_version
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="curVersion != null">
+        cur_version,
+      </if>
+      <if test="latestVersion != null">
+        latest_version,
+      </if>
+      <if test="beginTime != null">
+        begin_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="downloadUrl != null">
+        download_url,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="curVersion != null">
+        #{curVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="latestVersion != null">
+        #{latestVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downloadUrl != null">
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.smarthome.service.model.Version">
+    update t_version
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="curVersion != null">
+        cur_version = #{curVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="latestVersion != null">
+        latest_version = #{latestVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downloadUrl != null">
+        download_url = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.smarthome.service.model.Version">
+    update t_version
+    set type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      cur_version = #{curVersion,jdbcType=VARCHAR},
+      latest_version = #{latestVersion,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Query_Cause">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="id != null">
+         and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="type != null">
+         and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+         and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="curVersion != null">
+         and cur_version = #{curVersion,jdbcType=VARCHAR}
+      </if>
+      <if test="latestVersion != null">
+         and latest_version = #{latestVersion,jdbcType=VARCHAR}
+      </if>
+      <if test="beginTime != null">
+         and begin_time = #{beginTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime != null">
+         and end_time = #{endTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="downloadUrl != null">
+         and download_url = #{downloadUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null">
+         and description = #{description,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap">
+    select * from t_version
+  </select>
+  <select id="getList" parameterType="com.smarthome.service.model.Version" resultMap="BaseResultMap">
+    select * from t_version
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="getPageList" parameterType="com.smarthome.service.model.Version" resultMap="BaseResultMap">
+    select * from t_version
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="queryPageList" parameterType="com.smarthome.service.model.Version" resultMap="BaseResultMap" useCache="false">
+    select * from t_version
+    <include refid="Base_Query_Cause" />
+  </select>
+  <cache type="com.smarthome.service.redis.MybatisRedisCache" />
+</mapper>

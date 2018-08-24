@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smarthome.service.mapper.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.smarthome.service.model.Device">
+    <id column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="device_code" jdbcType="VARCHAR" property="deviceCode" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_alias" jdbcType="VARCHAR" property="deviceAlias" />
+    <result column="device_pwd" jdbcType="VARCHAR" property="devicePwd" />
+    <result column="device_type" jdbcType="CHAR" property="deviceType" />
+    <result column="device_status" jdbcType="CHAR" property="deviceStatus" />
+    <result column="district_id" jdbcType="BIGINT" property="districtId" />
+    <result column="area_id" jdbcType="BIGINT" property="areaId" />
+    <result column="building_id" jdbcType="BIGINT" property="buildingId" />
+    <result column="unit_id" jdbcType="BIGINT" property="unitId" />
+    <result column="room_id" jdbcType="BIGINT" property="roomId" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="coordinate" jdbcType="VARCHAR" property="coordinate" />
+    <result column="district_gate_flag" jdbcType="CHAR" property="districtGateFlag" />
+    <result column="created_user" jdbcType="VARCHAR" property="createdUser" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_user" jdbcType="VARCHAR" property="updatedUser" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="device_ip" jdbcType="VARCHAR" property="deviceIp" />
+    <result column="device_mac" jdbcType="VARCHAR" property="deviceMac" />
+    <result column="login_userid" jdbcType="BIGINT" property="loginUserid" />
+    <result column="login_status" jdbcType="CHAR" property="loginStatus" />
+    <result column="devicebg_url" jdbcType="VARCHAR" property="devicebgUrl" />
+    <result column="unitdoor_no" jdbcType="VARCHAR" property="unitdoorNo" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="sipid" jdbcType="VARCHAR" property="sipid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    device_id, device_code, device_name, device_alias, device_pwd, device_type, device_status, 
+    district_id, area_id, building_id, unit_id, room_id, position, coordinate, district_gate_flag, 
+    created_user, created_time, updated_user, updated_time, device_ip, device_mac, login_userid, 
+    login_status, devicebg_url, unitdoor_no, version, sipid
+  </sql>
+  <select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from t_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.smarthome.service.model.Device">
+    insert into t_device (device_id, device_code, device_name, 
+      device_alias, device_pwd, device_type, 
+      device_status, district_id, area_id, 
+      building_id, unit_id, room_id, 
+      position, coordinate, district_gate_flag, 
+      created_user, created_time, updated_user, 
+      updated_time, device_ip, device_mac, 
+      login_userid, login_status, devicebg_url, 
+      unitdoor_no, version, sipid
+      )
+    values (#{deviceId,jdbcType=BIGINT}, #{deviceCode,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+      #{deviceAlias,jdbcType=VARCHAR}, #{devicePwd,jdbcType=VARCHAR}, #{deviceType,jdbcType=CHAR}, 
+      #{deviceStatus,jdbcType=CHAR}, #{districtId,jdbcType=BIGINT}, #{areaId,jdbcType=BIGINT}, 
+      #{buildingId,jdbcType=BIGINT}, #{unitId,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, 
+      #{position,jdbcType=VARCHAR}, #{coordinate,jdbcType=VARCHAR}, #{districtGateFlag,jdbcType=CHAR}, 
+      #{createdUser,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{deviceIp,jdbcType=VARCHAR}, #{deviceMac,jdbcType=VARCHAR}, 
+      #{loginUserid,jdbcType=BIGINT}, #{loginStatus,jdbcType=CHAR}, #{devicebgUrl,jdbcType=VARCHAR}, 
+      #{unitdoorNo,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{sipid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertActive" parameterType="com.smarthome.service.model.Device">
+    insert into t_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="deviceCode != null">
+        device_code,
+      </if>
+      <if test="deviceName != null">
+        device_name,
+      </if>
+      <if test="deviceAlias != null">
+        device_alias,
+      </if>
+      <if test="devicePwd != null">
+        device_pwd,
+      </if>
+      <if test="deviceType != null">
+        device_type,
+      </if>
+      <if test="deviceStatus != null">
+        device_status,
+      </if>
+      <if test="districtId != null">
+        district_id,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="buildingId != null">
+        building_id,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+      <if test="roomId != null">
+        room_id,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="coordinate != null">
+        coordinate,
+      </if>
+      <if test="districtGateFlag != null">
+        district_gate_flag,
+      </if>
+      <if test="createdUser != null">
+        created_user,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedUser != null">
+        updated_user,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="deviceIp != null">
+        device_ip,
+      </if>
+      <if test="deviceMac != null">
+        device_mac,
+      </if>
+      <if test="loginUserid != null">
+        login_userid,
+      </if>
+      <if test="loginStatus != null">
+        login_status,
+      </if>
+      <if test="devicebgUrl != null">
+        devicebg_url,
+      </if>
+      <if test="unitdoorNo != null">
+        unitdoor_no,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="sipid != null">
+        sipid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null">
+        #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAlias != null">
+        #{deviceAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePwd != null">
+        #{devicePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=CHAR},
+      </if>
+      <if test="deviceStatus != null">
+        #{deviceStatus,jdbcType=CHAR},
+      </if>
+      <if test="districtId != null">
+        #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="buildingId != null">
+        #{buildingId,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinate != null">
+        #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="districtGateFlag != null">
+        #{districtGateFlag,jdbcType=CHAR},
+      </if>
+      <if test="createdUser != null">
+        #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null">
+        #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceIp != null">
+        #{deviceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceMac != null">
+        #{deviceMac,jdbcType=VARCHAR},
+      </if>
+      <if test="loginUserid != null">
+        #{loginUserid,jdbcType=BIGINT},
+      </if>
+      <if test="loginStatus != null">
+        #{loginStatus,jdbcType=CHAR},
+      </if>
+      <if test="devicebgUrl != null">
+        #{devicebgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="unitdoorNo != null">
+        #{unitdoorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="sipid != null">
+        #{sipid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActive" parameterType="com.smarthome.service.model.Device">
+    update t_device
+    <set>
+      <if test="deviceCode != null">
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAlias != null">
+        device_alias = #{deviceAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePwd != null">
+        device_pwd = #{devicePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null">
+        device_type = #{deviceType,jdbcType=CHAR},
+      </if>
+      <if test="deviceStatus != null">
+        device_status = #{deviceStatus,jdbcType=CHAR},
+      </if>
+      <if test="districtId != null">
+        district_id = #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null">
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="buildingId != null">
+        building_id = #{buildingId,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null">
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinate != null">
+        coordinate = #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="districtGateFlag != null">
+        district_gate_flag = #{districtGateFlag,jdbcType=CHAR},
+      </if>
+      <if test="createdUser != null">
+        created_user = #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null">
+        updated_user = #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceIp != null">
+        device_ip = #{deviceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceMac != null">
+        device_mac = #{deviceMac,jdbcType=VARCHAR},
+      </if>
+      <if test="loginUserid != null">
+        login_userid = #{loginUserid,jdbcType=BIGINT},
+      </if>
+      <if test="loginStatus != null">
+        login_status = #{loginStatus,jdbcType=CHAR},
+      </if>
+      <if test="devicebgUrl != null">
+        devicebg_url = #{devicebgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="unitdoorNo != null">
+        unitdoor_no = #{unitdoorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="sipid != null">
+        sipid = #{sipid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.smarthome.service.model.Device">
+    update t_device
+    set device_code = #{deviceCode,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      device_alias = #{deviceAlias,jdbcType=VARCHAR},
+      device_pwd = #{devicePwd,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=CHAR},
+      device_status = #{deviceStatus,jdbcType=CHAR},
+      district_id = #{districtId,jdbcType=BIGINT},
+      area_id = #{areaId,jdbcType=BIGINT},
+      building_id = #{buildingId,jdbcType=BIGINT},
+      unit_id = #{unitId,jdbcType=BIGINT},
+      room_id = #{roomId,jdbcType=BIGINT},
+      position = #{position,jdbcType=VARCHAR},
+      coordinate = #{coordinate,jdbcType=VARCHAR},
+      district_gate_flag = #{districtGateFlag,jdbcType=CHAR},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      device_ip = #{deviceIp,jdbcType=VARCHAR},
+      device_mac = #{deviceMac,jdbcType=VARCHAR},
+      login_userid = #{loginUserid,jdbcType=BIGINT},
+      login_status = #{loginStatus,jdbcType=CHAR},
+      devicebg_url = #{devicebgUrl,jdbcType=VARCHAR},
+      unitdoor_no = #{unitdoorNo,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      sipid = #{sipid,jdbcType=VARCHAR}
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <sql id="Base_Query_Cause">
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="deviceId != null">
+         and device_id = #{deviceId,jdbcType=BIGINT}
+      </if>
+      <if test="deviceCode != null">
+         and device_code = #{deviceCode,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceName != null">
+         and device_name = #{deviceName,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceAlias != null">
+         and device_alias = #{deviceAlias,jdbcType=VARCHAR}
+      </if>
+      <if test="devicePwd != null">
+         and device_pwd = #{devicePwd,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceType != null">
+         and device_type = #{deviceType,jdbcType=CHAR}
+      </if>
+      <if test="deviceStatus != null">
+         and device_status = #{deviceStatus,jdbcType=CHAR}
+      </if>
+      <if test="districtId != null">
+         and district_id = #{districtId,jdbcType=BIGINT}
+      </if>
+      <if test="areaId != null">
+         and area_id = #{areaId,jdbcType=BIGINT}
+      </if>
+      <if test="buildingId != null">
+         and building_id = #{buildingId,jdbcType=BIGINT}
+      </if>
+      <if test="unitId != null">
+         and unit_id = #{unitId,jdbcType=BIGINT}
+      </if>
+      <if test="roomId != null">
+         and room_id = #{roomId,jdbcType=BIGINT}
+      </if>
+      <if test="position != null">
+         and position = #{position,jdbcType=VARCHAR}
+      </if>
+      <if test="coordinate != null">
+         and coordinate = #{coordinate,jdbcType=VARCHAR}
+      </if>
+      <if test="districtGateFlag != null">
+         and district_gate_flag = #{districtGateFlag,jdbcType=CHAR}
+      </if>
+      <if test="createdUser != null">
+         and created_user = #{createdUser,jdbcType=VARCHAR}
+      </if>
+      <if test="createdTime != null">
+         and created_time = #{createdTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedUser != null">
+         and updated_user = #{updatedUser,jdbcType=VARCHAR}
+      </if>
+      <if test="updatedTime != null">
+         and updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="deviceIp != null">
+         and device_ip = #{deviceIp,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceMac != null">
+         and device_mac = #{deviceMac,jdbcType=VARCHAR}
+      </if>
+      <if test="loginUserid != null">
+         and login_userid = #{loginUserid,jdbcType=BIGINT}
+      </if>
+      <if test="loginStatus != null">
+         and login_status = #{loginStatus,jdbcType=CHAR}
+      </if>
+      <if test="devicebgUrl != null">
+         and devicebg_url = #{devicebgUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="unitdoorNo != null">
+         and unitdoor_no = #{unitdoorNo,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null">
+         and version = #{version,jdbcType=VARCHAR}
+      </if>
+      <if test="sipid != null">
+         and sipid = #{sipid,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap">
+    select * from t_device
+  </select>
+  <select id="getList" parameterType="com.smarthome.service.model.Device" resultMap="BaseResultMap">
+    select * from t_device
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="getPageList" parameterType="com.smarthome.service.model.Device" resultMap="BaseResultMap">
+    select * from t_device
+    <include refid="Base_Query_Cause" />
+  </select>
+  <select id="queryPageList" parameterType="com.smarthome.service.model.Device" resultMap="BaseResultMap" useCache="false">
+    select * from t_device
+    <include refid="Base_Query_Cause" />
+  </select>
+  <cache type="com.smarthome.service.redis.MybatisRedisCache" />
+</mapper>
